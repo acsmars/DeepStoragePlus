@@ -29,6 +29,7 @@ public final class DeepStoragePlus extends JavaPlugin {
     public static String prefix;
     public static boolean loadpack;
     public static int maxrange;
+    public static boolean interdimensional;
     public static boolean packmsg;
     public static String DSUname = ChatColor.BLUE.toString() + ChatColor.BOLD.toString() + "Deep Storage Unit";
     public static String sortername = ChatColor.BLUE.toString() + ChatColor.BOLD.toString() + "Sorter";
@@ -80,6 +81,7 @@ public final class DeepStoragePlus extends JavaPlugin {
         loadpack = getConfig().getBoolean("loadresourcepack");
         packmsg = getConfig().getBoolean("resourcepackmessage");
         maxrange = getConfig().getInt("range");
+        interdimensional = getConfig().getBoolean("interdimensional");
 
         LanguageManager.setup(plugin);
 

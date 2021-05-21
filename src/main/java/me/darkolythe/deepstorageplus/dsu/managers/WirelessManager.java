@@ -1,7 +1,9 @@
 package me.darkolythe.deepstorageplus.dsu.managers;
 
 import me.darkolythe.deepstorageplus.DeepStoragePlus;
+import me.darkolythe.deepstorageplus.dsu.StorageUtils;
 import me.darkolythe.deepstorageplus.utils.LanguageManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -73,6 +75,8 @@ public class WirelessManager {
         int x = Integer.parseInt(lore.get(1).replaceAll("^[^_]*:", "").replace(" ", "").replace(ChatColor.RED.toString(), ""));
         int y = Integer.parseInt(lore.get(2).replaceAll("^[^_]*:", "").replace(" ", "").replace(ChatColor.RED.toString(), ""));
         int z = Integer.parseInt(lore.get(3).replaceAll("^[^_]*:", "").replace(" ", "").replace(ChatColor.RED.toString(), ""));
+
+        String worldName = lore.get(4).replaceAll("^[^_]*:", "").replace(" ", "").replace(ChatColor.RED.toString(), "");
         int range = -1;
         if (!lore.get(5).contains("none") && lore.get(5).length() > 1) {
             range = Integer.parseInt(lore.get(5).replaceAll("^[^_]*:", "").replace(" ", "").replace(ChatColor.RED.toString(), ""));
@@ -80,24 +84,24 @@ public class WirelessManager {
 
         String world = ChatColor.GRAY.toString() + LanguageManager.getValue("world") + ": " + player.getWorld().getName();
         String newWorld = ChatColor.GRAY.toString() + LanguageManager.getValue("world") + ": " + ChatColor.RED.toString() + player.getWorld().getName();
-        if (!world.equals(lore.get(4)) && !newWorld.equals(lore.get(4))) {
+        if (!world.equals(lore.get(4)) && !newWorld.equals(lore.get(4)) && !DeepStoragePlus.interdimensional) {
             player.sendMessage(DeepStoragePlus.prefix + ChatColor.RED + LanguageManager.getValue("cantopenin") + " " + ChatColor.GRAY + player.getWorld().getName());
             return null;
         }
 
-        Block block = player.getWorld().getBlockAt(x, y, z);
+        Block block = Bukkit.getWorld(worldName).getBlockAt(x, y, z);
         if (block.getType() != Material.CHEST) {
             player.sendMessage(DeepStoragePlus.prefix + ChatColor.RED + LanguageManager.getValue("dsunolongerthere"));
             return null;
         }
 
-        if (block.getLocation().distance(player.getLocation()) > range && range != -1) {
+        if (!DeepStoragePlus.interdimensional && (block.getLocation().distance(player.getLocation()) > range && range != -1)) {
             player.sendMessage(DeepStoragePlus.prefix + ChatColor.RED + LanguageManager.getValue("toofar"));
             return null;
         }
 
         Chest chest = (Chest) block.getState();
-        if (chest.getInventory().contains(DSUManager.getDSUWall())) {
+        if (StorageUtils.isDSU(chest.getInventory()) || StorageUtils.isSorter(chest.getInventory())) {
             return chest.getInventory();
         } else {
             player.sendMessage(DeepStoragePlus.prefix + ChatColor.RED + LanguageManager.getValue("dsunolongerthere"));

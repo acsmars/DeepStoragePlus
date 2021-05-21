@@ -1,6 +1,7 @@
 package me.darkolythe.deepstorageplus.dsu.listeners;
 
 import me.darkolythe.deepstorageplus.DeepStoragePlus;
+import me.darkolythe.deepstorageplus.dsu.StorageUtils;
 import me.darkolythe.deepstorageplus.dsu.managers.DSUManager;
 import me.darkolythe.deepstorageplus.utils.LanguageManager;
 import me.darkolythe.deepstorageplus.utils.RecipeManager;
@@ -45,7 +46,7 @@ public class WirelessListener implements Listener {
             if (block != null && block.getType() == Material.CHEST) {
                 if (!event.isCancelled()) {
                     Chest chest = (Chest) block.getState();
-                    if (chest.getInventory().contains(DSUManager.getDSUWall())) {
+                    if (StorageUtils.isDSU(chest.getInventory()) || StorageUtils.isSorter(chest.getInventory())) {
                         ItemStack item = player.getInventory().getItemInMainHand();
                         if (isWirelessTerminal(item)) {
                             if (item.getItemMeta().getLore().contains(ChatColor.RED.toString() + ChatColor.BOLD.toString() + LanguageManager.getValue("unlinked"))) {
