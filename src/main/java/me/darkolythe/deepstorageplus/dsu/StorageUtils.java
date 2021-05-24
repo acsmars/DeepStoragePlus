@@ -118,6 +118,14 @@ public class StorageUtils {
         return true;
     }
 
+//    public static int sorterFullness(Inventory inv) {
+//        if (inv.getSize() != 54)
+//            return 0;
+//
+//        if (inv.getType() != InventoryType.CHEST)
+//            return 0;
+//    }
+
     /**
      * Returns the custom name of a chest or double chest, if either side has one. Prefers the left chest.
      * @param block

@@ -35,7 +35,7 @@ public final class DeepStoragePlus extends JavaPlugin {
     public static String sortername = ChatColor.BLUE.toString() + ChatColor.BOLD.toString() + "Sorter";
 
     public static final long minTimeSinceLastSortPlayer = 500L;
-    public static final long minTimeSinceLastSortHopper = 30000L;
+    public static final long minTimeSinceLastSortHopper = 60000L;
 
     /*Currently open DSU for each player*/
     public static Map<UUID, Container> openDSU = new HashMap<>();

@@ -22,9 +22,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static me.darkolythe.deepstorageplus.dsu.StorageUtils.hasNoMeta;
 import static me.darkolythe.deepstorageplus.dsu.StorageUtils.stringToMat;
@@ -118,6 +116,9 @@ public class IOListener implements Listener {
                 }
             } else if (StorageUtils.isSorter(IOInv)) {
                 if (IOStatus.equals("input")) {
+                    if (Arrays.stream(IOInv.getContents()).anyMatch(Objects::isNull)) {
+                        return;
+                    }
                     main.sorterUpdateManager.sortItems(IOInv, DeepStoragePlus.minTimeSinceLastSortHopper);
                 } else {
                     event.setCancelled(true);
